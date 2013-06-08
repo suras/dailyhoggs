@@ -1,0 +1,97 @@
+var appModule = angular.module('dailyHog' , ['dailyHog.services']).config([
+  "$httpProvider", function($httpProvider) {
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  }
+]);
+
+var noticeErrorClass = "alert";
+var noticeSuccessClass = "warning";
+appModule.controller('SignUpFormController', ['$scope', 'Register', 'Login', function($scope, Register, Login){
+	
+	$scope.sending = {request: false};
+	$scope.addUser = function(){ 
+		$scope.sending.request = true;
+	var params = { email: $scope.user.email,
+		password: $scope.user.password,
+	    password_confirmation: $scope.user.password_confirmation
+	
+};
+	var status = new Register(params);
+	status.$save(function()
+	{
+		$scope.sending.request = false;
+		$scope.$emit('messageEvent', "Successfully Registered.Login To continue", noticeSuccessClass);
+		
+	},function(response){
+		$scope.sending.request = false;
+	
+console.log(response.email);
+console.log(response.data.errors.email);
+console.log(response);
+var errors = "Check the following errors ";	
+ Object.keys(response.data.errors).forEach(function(key)
+{
+	errors += key + "&nbsp; " + response.data.errors[key] + '<br>';
+})
+$scope.$emit('messageEvent', errors, noticeErrorClass);
+	});
+
+}	
+
+
+
+
+check_password = function()
+{
+	
+	if($scope.user.password != $scope.user.password_confirmation)
+	{
+		
+		$scope.$emit('messageEvent', "Password Does not match", noticeErrorClass);
+
+
+	}
+	else
+	{
+		
+		$scope.$emit('messageEvent', " ", " ");
+	}
+	
+	
+}
+
+
+
+$scope.$watch('user.password_confirmation', check_password);
+	
+}]);
+
+function FormController()
+{
+	
+	
+}
+appModule.controller('NoticeController', ['$scope', function($scope){
+	$scope.notice = "alert";
+	$scope.noticeBox = false;
+	$scope.message = "";	
+	$scope.$on('messageEvent', function(event, message, className) {
+$scope.noticeBox = true;
+$scope.message = message;
+$scope.notice = className;
+});
+
+	
+	
+}]);
+
+
+appModule.controller('MainController', ['$scope', function($scope){
+$scope.isViewLoading = false;
+$scope.$on('$routeChangeStart', function() {
+  $scope.isViewLoading = true;
+});
+$scope.$on('$routeChangeSuccess', function() {
+  $scope.isViewLoading = false;
+});
+}]);

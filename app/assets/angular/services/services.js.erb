@@ -1,0 +1,44 @@
+'use strict';
+var services = angular.module('dailyHog.services', ['ngResource']);
+
+services.factory('Register', ['$resource', function($resource)
+{
+	return $resource('/users.json', {},{}
+	
+)}]);
+
+services.factory('Login', ['$resource', function($resource)
+{
+	return $resource('/users/sign_in.json', {},{}
+	
+)}]);
+
+
+
+services.factory('SignUpForm',['Register', '$q', function(Register, $q){
+	return function() {
+		
+		var delay = $q.defer();
+		Register.query(function(form){
+			delay.resolve(form);
+		}, function() {
+			delay.reject('Unable to get topics');
+		});
+		
+	return delay.promise;	
+};
+}]);
+
+services.factory('topicloader', ['SingleTopic','$route','$q', function(SingleTopic, $route ,$q){
+	return function() {
+	var delay = $q.defer();
+	SingleTopic.get({id: $route.current.params.topicID}, function(topic){
+		
+	delay.resolve(topic);	
+	}, function(){
+		delay.reject('unable to fetch', + $route.current.params.topicID)
+	});
+	
+	return delay.promise;
+};
+}]);

@@ -1,0 +1,20 @@
+'use strict';
+appModule.config(function ($routeProvider) {
+    $routeProvider
+      .when('/sign_up', {
+		  controller: 'SignUpFormController',
+          templateUrl: '<%= asset_path('templates/sign_up.html.erb')%>'
+      })
+      .when('/sign_in', {
+		  controller: 'FormController',
+          templateUrl: '<%= asset_path('templates/sign_in.html.erb')%>'
+      })
+      .when('/forgot_password', {
+		  controller: 'FormController',
+          templateUrl: '<%= asset_path('templates/forget.html.erb')%>'
+      })
+      .otherwise({
+      redirectTo: '/sign_up'
+      });
+     
+  });

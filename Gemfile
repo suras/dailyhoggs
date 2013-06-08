@@ -28,6 +28,8 @@ gem 'devise'
 gem 'cancan'
 gem "figaro", ">= 0.5.3"
 gem 'tinymce-rails'
+gem 'bootstrap-sass'
+gem 'selenium-webdriver'
 gem 'sqlite3', :group => [:development, :test]
 
 

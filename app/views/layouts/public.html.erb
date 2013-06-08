@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>Dailyhoggs</title>
+   <meta name="description" content="Express the days of you and your friends">
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body  ng-app = "dailyHog" class="<%= controller_name %> <%= action_name %>" >
+    <div id="container" class="container" ng-controller = "NoticeController">
+      <header>
+      	<div><a id = "sign-up-link" ng-href = "#/sign_up">Sign Up</a> or <a id="sign-in-link" ng-href = "#/sign_in">Sign In</a></div>
+       <div ng-bind-html-unsafe="message"  class = '{{notice}}' ng-show="noticeBox"></div>
+       <div ng-controller = "MainController"><span ng-show="isViewLoading"> loading the view... <span></div>
+       <div ng-view></div>
+
+      </header>
+      <div id="main" role="main">
+        <%= yield %>
+      </div>
+      <footer>
+      </footer>
+    </div> <!--! end of #container -->
+  </body>
+</html>

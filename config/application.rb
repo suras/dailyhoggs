@@ -68,5 +68,10 @@ module Dailyhoggs
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    #for heroku not to initialize models on precompile
+    config.assets.initialize_on_precompile = false
+    #prevent logging of these parameters
+    config.filter_parameters += [:password, :password_confirmation]
+
   end
 end

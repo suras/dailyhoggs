@@ -12,4 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
+//= require angular
+//= require angular-resource
+//= require angular-bootstrap
+//= require angularjs/rails/resource
+//= require_tree ../angular/services
+//= require_tree ../angular/controllers
+//= require_tree ../angular
 //= require_tree .
